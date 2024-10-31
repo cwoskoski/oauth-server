@@ -17,6 +17,12 @@
         "nesbot/carbon": "^2.0",
         "phpseclib/phpseclib": "^3.0"
     },
+    "require-dev": {
+        "hyperf/command": "^3.1@dev",
+        "hyperf/config": "^3.1@dev",
+        "hyperf/http-server": "^3.1@dev",
+        "hyperf/utils": "^3.1@dev"
+    },
     "autoload": {
         "psr-4": {
             "OAuthServer\\": "src/"

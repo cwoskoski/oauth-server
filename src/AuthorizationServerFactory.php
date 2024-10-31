@@ -20,15 +20,15 @@ use OAuthServer\Repositories\AuthCodeRepository;
 use League\OAuth2\Server\Grant\RefreshTokenGrant;
 use OAuthServer\Repositories\AccessTokenRepository;
 use OAuthServer\Repositories\RefreshTokenRepository;
+use function Hyperf\Support\make;
+use function Hyperf\Tappable\tap;
 
 class AuthorizationServerFactory
 {
-    protected $container;
     protected $config;
 
-    public function __construct(ContainerInterface $container)
+    public function __construct(protected ContainerInterface $container)
     {
-        $this->container = $container;
         $this->config    = $container->get(ConfigInterface::class);
     }
 
@@ -80,7 +80,7 @@ class AuthorizationServerFactory
      *
      * @return \League\OAuth2\Server\AuthorizationServer
      */
-    public function makeAuthorizationServer()
+    public function makeAuthorizationServer(): AuthorizationServer
     {
         return new AuthorizationServer(
             make(ClientRepository::class),         // instance of ClientRepositoryInterface
@@ -91,7 +91,7 @@ class AuthorizationServerFactory
         );
     }
 
-    public function makeAuthCodeGrant()
+    public function makeAuthCodeGrant(): AuthCodeGrant
     {
         return new AuthCodeGrant(
             make(AuthCodeRepository::class),

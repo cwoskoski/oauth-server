@@ -23,7 +23,6 @@ class UserGrant extends AbstractGrant
     /**
      * @param UserRepositoryInterface         $userRepository
      * @param RefreshTokenRepositoryInterface $refreshTokenRepository
-     * @param OneTimePasswordInterface $otp
      */
     public function __construct(
         UserRepositoryInterface $userRepository,
@@ -42,7 +41,8 @@ class UserGrant extends AbstractGrant
         ServerRequestInterface $request,
         ResponseTypeInterface $responseType,
         DateInterval $accessTokenTTL
-    ) {
+    ): ResponseTypeInterface
+    {
         // Validate request
         $client = $this->validateClient($request);
         $scopes = $this->validateScopes($this->getRequestParameter('scope', $request, $this->defaultScope));
@@ -72,9 +72,10 @@ class UserGrant extends AbstractGrant
      *
      * @param ServerRequestInterface $request
      * @param ClientEntityInterface $client
-     * @return void
+     * @return UserEntity
+     * @throws OAuthServerException
      */
-    protected function validateUser(ServerRequestInterface $request, ClientEntityInterface $client)
+    protected function validateUser(ServerRequestInterface $request, ClientEntityInterface $client): UserEntity
     {
         $user = $request->getAttribute('user');
 
@@ -84,7 +85,7 @@ class UserGrant extends AbstractGrant
 
         $user = new UserEntity($user->id);
 
-        if ($user instanceof UserEntityInterface === false) {
+        if (!$user instanceof UserEntityInterface) {
             $this->getEmitter()->emit(new RequestEvent(RequestEvent::USER_AUTHENTICATION_FAILED, $request));
 
             throw OAuthServerException::invalidGrant();

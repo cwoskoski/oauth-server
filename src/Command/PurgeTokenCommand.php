@@ -7,6 +7,7 @@ use Hyperf\Command\Command;
 use Hyperf\DbConnection\Db;
 use Hyperf\Contract\ConfigInterface;
 use Psr\Container\ContainerInterface;
+use function Hyperf\Config\config;
 
 
 class PurgeTokenCommand extends Command
@@ -18,21 +19,9 @@ class PurgeTokenCommand extends Command
      */
     protected ?string $signature = 'oauth:purge {--force : purge all expires token}';
 
-    /**
-     * @var ContainerInterface
-     */
-    private $container;
-
-    /**
-     * @var ConfigInterface
-     */
-    private $config;
-
-    public function __construct(ContainerInterface $container, ConfigInterface $config)
+    public function __construct(private ContainerInterface $container, private ConfigInterface $config)
     {
         parent::__construct();
-        $this->container = $container;
-        $this->config = $config;
     }
 
     /**
@@ -40,7 +29,7 @@ class PurgeTokenCommand extends Command
      *
      * @return void
      */
-    public function handle()
+    public function handle(): void
     {
         $force = $this->input->getOption('force');
 
@@ -54,7 +43,7 @@ class PurgeTokenCommand extends Command
      *
      * @return void
      */
-    protected function configure()
+    protected function configure(): void
     {
         $this->setDescription('Purge all token expires & revoked');
     }
@@ -64,7 +53,7 @@ class PurgeTokenCommand extends Command
      *
      * @return void
      */
-    private function clear()
+    private function clear(): void
     {
         $now = Carbon::now()->subHours(7)->format('Y-m-d H:i:s');
 

@@ -5,7 +5,6 @@ namespace OAuthServer\Middleware;
 use Psr\Http\Message\ResponseInterface;
 use League\OAuth2\Server\ResourceServer;
 use Psr\Http\Server\MiddlewareInterface;
-use OAuthServer\Middleware\ValidateScopeTrait;
 use OAuthServer\Repositories\ClientRepository;
 use OAuthServer\Exception\AuthenticationException;
 use Psr\Http\Message\ServerRequestInterface as Request;
@@ -16,15 +15,10 @@ class ClientMiddleware implements MiddlewareInterface
 {
     use ValidateScopeTrait;
 
-    protected $repository;
-    protected $server;
     protected $client;
 
-    public function __construct(ClientRepository $repository, ResourceServer $server)
-    {
-        $this->repository = $repository;
-        $this->server = $server;
-    }
+    public function __construct(protected ClientRepository $repository, protected ResourceServer $server)
+    {}
 
     public function process(Request $request, Handler $handler): ResponseInterface
     {
@@ -46,7 +40,7 @@ class ClientMiddleware implements MiddlewareInterface
         return $handler->handle($request);
     }
 
-    protected function validate($request, $scopes)
+    protected function validate($request, $scopes): void
     {
         $client = $this->repository->findActive($request->getAttribute('oauth_client_id'));
 

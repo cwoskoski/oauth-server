@@ -13,14 +13,10 @@ use League\OAuth2\Server\Entities\UserEntityInterface;
 
 class UserEntity implements UserEntityInterface
 {
-    protected $id;
+    public function __construct(protected string $id)
+    {}
 
-    public function __construct($id)
-    {
-        $this->id = $id;
-    }
-
-    public function getIdentifier()
+    public function getIdentifier(): string
     {
         return $this->id;
     }

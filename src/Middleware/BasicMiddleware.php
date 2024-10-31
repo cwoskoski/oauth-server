@@ -16,15 +16,10 @@ class BasicMiddleware implements MiddlewareInterface
 {
     use ValidateScopeTrait;
 
-    protected $repository;
-    protected $server;
     protected $client;
 
-    public function __construct(ClientRepository $repository, ResourceServer $server)
-    {
-        $this->repository = $repository;
-        $this->server = $server;
-    }
+    public function __construct(protected ClientRepository $repository, protected ResourceServer $server)
+    {}
 
     public function process(Request $request, Handler $handler): ResponseInterface
     {
@@ -46,7 +41,7 @@ class BasicMiddleware implements MiddlewareInterface
         return $handler->handle($request);
     }
 
-    protected function validate($request, $scopes)
+    protected function validate($request, $scopes): void
     {
         $client = $this->repository->findActive($request->getAttribute('oauth_client_id'));
 

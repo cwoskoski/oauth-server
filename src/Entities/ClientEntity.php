@@ -23,54 +23,64 @@ class ClientEntity implements ClientEntityInterface
      *
      * @var string
      */
-    protected $identifier;
+    protected string $identifier;
 
     /**
      * The client's provider.
      *
      * @var string
      */
-    public $provider;
+    public string $provider;
 
     /**
      * Undocumented variable
      *
      * @var [type]
      */
-    public $projectId;
+    public mixed $projectId;
 
     /**
      * Create a new client instance.
      *
-     * @param  string  $identifier
-     * @param  string  $name
-     * @param  string  $redirectUri
-     * @param  bool  $isConfidential
-     * @param  string|null  $provider
-     * @return void
+     * @param string $identifier
+     * @param string $name
+     * @param string $redirectUri
+     * @param bool $isConfidential
+     * @param string|null $provider
+     * @param null $projectId
      */
-    public function __construct($identifier, $name, $redirectUri, $isConfidential = false, $provider = null, $projectId = null)
+    public function __construct(
+        string $identifier,
+        string $name,
+        string $redirectUri,
+        bool $isConfidential = false,
+        ?string $provider = null,
+        $projectId = null)
     {
         $this->setIdentifier((string) $identifier);
 
         $this->name = $name;
-        $this->isConfidential = $isConfidential;
-        $this->redirectUri = explode(',', $redirectUri);
+        $this->setRedirectUri($redirectUri);
+        $this->setConfidential($isConfidential);
         $this->provider = $provider;
         $this->projectId = $projectId;
     }
 
-    public function setName($name)
+    public function setName($name): void
     {
         $this->name = $name;
     }
 
-    public function setRedirectUri($uri)
+    public function setRedirectUri(string|array $uri): void
     {
+        if (is_string($uri)) {
+            $uri = explode(',', $uri);
+        }
+
         $this->redirectUri = $uri;
     }
 
-    public function setConfidential()
+    public function setConfidential(): void
     {
         $this->isConfidential = true;
     }

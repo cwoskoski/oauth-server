@@ -13,28 +13,16 @@ use OAuthServer\Exception\AuthenticationException;
 use League\OAuth2\Server\Exception\OAuthServerException;
 
 
-/**
- * @Controller()
- */
+#[Controller]
 class TokenIssueController
 {
-    protected $container;
-    protected $server;
-    protected $tokens;
-
     public function __construct(
-        ContainerInterface $container,
-        AuthorizationServer $server,
-        TokenRepository $tokens
-    ) {
-        $this->container = $container;
-        $this->server    = $server;
-        $this->tokens    = $tokens;
-    }
+        protected ContainerInterface $container,
+        protected AuthorizationServer $server,
+        protected TokenRepository $tokens
+    ) {}
 
-    /**
-     * @RequestMapping(path="/oauth/token", methods="post")
-     */
+    #[RequestMapping(path: "/oauth/token", methods: ["POST"])]
     public function issueToken(RequestInterface $request, ResponseInterface $response)
     {
         try {

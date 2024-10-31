@@ -6,19 +6,18 @@ use Hyperf\Contract\ConfigInterface;
 use Psr\Container\ContainerInterface;
 use League\OAuth2\Server\ResourceServer;
 use OAuthServer\Repositories\AccessTokenRepository;
+use function Hyperf\Support\make;
 
 class ResourceServerFactory
 {
-    protected $container;
     protected $config;
 
-    public function __construct(ContainerInterface $container)
+    public function __construct(protected ContainerInterface $container)
     {
-        $this->container = $container;
         $this->config    = $container->get(ConfigInterface::class);
     }
 
-    public function __invoke()
+    public function __invoke(): ResourceServer
     {
         return new ResourceServer(
             make(AccessTokenRepository::class),

@@ -2,41 +2,27 @@
 
 namespace OAuthServer\Command;
 
-use Hyperf\Utils\Arr;
 use phpseclib3\Crypt\RSA;
 use Hyperf\Command\Command;
 use Hyperf\Contract\ConfigInterface;
 use Psr\Container\ContainerInterface;
-use Symfony\Component\Console\Input\InputOption;
-use Symfony\Component\Console\Input\InputArgument;
 
 class OAuthKeyCommand extends Command
 {
     /**
      * The name and signature of the console command.
      *
-     * @var string
      */
     protected ?string $signature = 'oauth:key {--force : Overwrite keys they already exist}
                                       {--length=4096 : The length of the private key}';
-    /**
-     * @var ContainerInterface
-     */
-    private $container;
 
-    /**
-     * @var ConfigInterface
-     */
-    private $config;
 
-    public function __construct(ContainerInterface $container, ConfigInterface $config)
+    public function __construct(private ContainerInterface $container, private ConfigInterface $config)
     {
         parent::__construct();
-        $this->container = $container;
-        $this->config = $config;
     }
 
-    public function handle()
+    public function handle(): void
     {
         $force = $this->input->getOption('force');
         $length = $this->input->getOption('length');
@@ -64,7 +50,7 @@ class OAuthKeyCommand extends Command
         }
     }
 
-    protected function configure()
+    protected function configure(): void
     {
         $this->setDescription('Create the encryption keys for API authentication');
     }

@@ -2,11 +2,11 @@
 
 namespace OAuthServer\Middleware;
 
+use League\OAuth2\Server\Exception\OAuthServerException;
 use Psr\Http\Message\ResponseInterface;
 use League\OAuth2\Server\ResourceServer;
 use Psr\Http\Server\MiddlewareInterface;
 use OAuthServer\Repositories\UserRepository;
-use OAuthServer\Middleware\ValidateScopeTrait;
 use OAuthServer\Repositories\ClientRepository;
 use OAuthServer\Exception\AuthenticationException;
 use Psr\Http\Message\ServerRequestInterface as Request;
@@ -16,26 +16,17 @@ class AuthMiddleware implements MiddlewareInterface
 {
     use ValidateScopeTrait;
 
-    protected $userRepository;
-    protected $repository;
-    protected $server;
     protected $client;
     protected $user;
 
-    public function __construct(UserRepository $userRepository, ClientRepository $repository, ResourceServer $server)
-    {
-        $this->userRepository = $userRepository;
-        $this->repository = $repository;
-        $this->server = $server;
-    }
+    public function __construct(protected UserRepository $userRepository, protected ClientRepository $repository, protected ResourceServer $server)
+    {}
 
     public function process(Request $request, Handler $handler): ResponseInterface
     {
         try {
             $request = $this->server->validateAuthenticatedRequest($request);
-        } catch (OAuthServerException $exception) {
-            throw new AuthenticationException("Unauthorize: {$exception->getMessage()}");
-        } catch (\Exception $exception) {
+        } catch (OAuthServerException|AuthenticationException|\Exception $exception) {
             throw new AuthenticationException("Unauthorize: {$exception->getMessage()}");
         }
 

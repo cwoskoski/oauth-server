@@ -13,13 +13,9 @@ trait ValidateScopeTrait
     /**
      * Validate token credentials.
      *
-     * @param  $token
-     * @param  array  $scopes
-     * @return void
-     *
-     * @throws \OAuthServer\Exception\MissingScopeException
+     * @throws MissingScopeException
      */
-    protected function validateScopes($tokenScopes, $scopes)
+    protected function validateScopes(array $tokenScopes, array $scopes): void
     {
         if (in_array('*', $tokenScopes, true)) {
             return;
@@ -32,7 +28,7 @@ trait ValidateScopeTrait
         }
     }
 
-    protected function can($tokenScopes, $scope)
+    protected function can($tokenScopes, $scope): bool
     {
         $scopes = [$scope];
 

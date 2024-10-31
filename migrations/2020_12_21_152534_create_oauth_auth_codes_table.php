@@ -23,7 +23,7 @@ class CreateOauthAuthCodesTable extends Migration
      *
      * @return void
      */
-    public function up()
+    public function up(): void
     {
         $this->schema->create('oauth_auth_codes', function (Blueprint $table) {
             $table->string('id', 100)->primary();
@@ -40,7 +40,7 @@ class CreateOauthAuthCodesTable extends Migration
      *
      * @return void
      */
-    public function down()
+    public function down(): void
     {
         $this->schema->dropIfExists('oauth_auth_codes');
     }
@@ -50,7 +50,7 @@ class CreateOauthAuthCodesTable extends Migration
      *
      * @return string|null
      */
-    public function getConnection()
+    public function getConnection(): string
     {
         return config('oauth.provider');
     }

@@ -19,7 +19,7 @@ use League\OAuth2\Server\Repositories\RefreshTokenRepositoryInterface;
  */
 class OtpGrant extends AbstractGrant
 {
-    protected $otp;
+    protected OneTimePasswordInterface $otp;
 
     /**
      * @param UserRepositoryInterface         $userRepository
@@ -45,7 +45,8 @@ class OtpGrant extends AbstractGrant
         ServerRequestInterface $request,
         ResponseTypeInterface $responseType,
         DateInterval $accessTokenTTL
-    ) {
+    ): ResponseTypeInterface
+    {
         // Validate request
         $client = $this->validateClient($request);
         $scopes = $this->validateScopes($this->getRequestParameter('scope', $request, $this->defaultScope));
@@ -78,7 +79,7 @@ class OtpGrant extends AbstractGrant
      *
      * @return UserEntityInterface
      */
-    protected function validateUser(ServerRequestInterface $request, ClientEntityInterface $client, OneTimePasswordInterface $otp)
+    protected function validateUser(ServerRequestInterface $request, ClientEntityInterface $client, OneTimePasswordInterface $otp): UserEntityInterface
     {
         $phone = $this->getRequestParameter('phone', $request);
 
@@ -112,7 +113,7 @@ class OtpGrant extends AbstractGrant
     /**
      * {@inheritdoc}
      */
-    public function getIdentifier()
+    public function getIdentifier(): string
     {
         return 'otp';
     }

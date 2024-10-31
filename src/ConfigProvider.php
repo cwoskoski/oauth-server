@@ -4,10 +4,15 @@ namespace OAuthServer;
 
 use League\OAuth2\Server\ResourceServer;
 use OAuthServer\Command\OAuthKeyCommand;
-use OAuthServer\AuthorizationServerFactory;
 use League\OAuth2\Server\AuthorizationServer;
+use OAuthServer\Repositories\AccessTokenRepository;
+use OAuthServer\Repositories\AuthCodeRepository;
+use OAuthServer\Repositories\ClientRepository;
+use OAuthServer\Repositories\RefreshTokenRepository;
+use OAuthServer\Repositories\ScopeRepository;
 use OAuthServer\Repositories\TokenRepository;
 use OAuthServer\Command\PurgeTokenCommand;
+use OAuthServer\Repositories\UserRepository;
 
 class ConfigProvider
 {

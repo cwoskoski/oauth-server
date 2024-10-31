@@ -29,7 +29,7 @@ class AccessTokenEntity implements AccessTokenEntityInterface
      * @param  \League\OAuth2\Server\Entities\ClientEntityInterface  $client
      * @return void
      */
-    public function __construct($userIdentifier, array $scopes, ClientEntityInterface $client)
+    public function __construct(string $userIdentifier, array $scopes, ClientEntityInterface $client)
     {
         $this->setUserIdentifier($userIdentifier);
 
