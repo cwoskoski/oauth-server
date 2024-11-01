@@ -12,6 +12,7 @@ namespace OAuthServer\Repositories;
 use OAuthServer\Entities\AuthCodeEntity;
 use League\OAuth2\Server\Entities\AuthCodeEntityInterface;
 use League\OAuth2\Server\Repositories\AuthCodeRepositoryInterface;
+use function Hyperf\Config\config;
 
 class AuthCodeRepository implements AuthCodeRepositoryInterface
 {

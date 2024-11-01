@@ -12,6 +12,7 @@ namespace OAuthServer\Repositories;
 use Hyperf\DbConnection\Db;
 use OAuthServer\Entities\ClientEntity;
 use League\OAuth2\Server\Repositories\ClientRepositoryInterface;
+use function Hyperf\Config\config;
 
 class ClientRepository implements ClientRepositoryInterface
 {

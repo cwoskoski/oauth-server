@@ -13,6 +13,7 @@ use Hyperf\Contract\ConfigInterface;
 use OAuthServer\Entities\ScopeEntity;
 use League\OAuth2\Server\Entities\ClientEntityInterface;
 use League\OAuth2\Server\Repositories\ScopeRepositoryInterface;
+use function Hyperf\Collection\collect;
 
 class ScopeRepository implements ScopeRepositoryInterface
 {

@@ -15,6 +15,7 @@ use OAuthServer\Entities\UserEntity;
 use OAuthServer\OneTimePasswordInterface;
 use League\OAuth2\Server\Entities\ClientEntityInterface;
 use League\OAuth2\Server\Repositories\UserRepositoryInterface;
+use function Hyperf\Config\config;
 
 class UserRepository implements UserRepositoryInterface
 {

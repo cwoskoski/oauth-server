@@ -15,6 +15,7 @@ use OAuthServer\Entities\RefreshTokenEntity;
 use Psr\EventDispatcher\EventDispatcherInterface;
 use League\OAuth2\Server\Entities\RefreshTokenEntityInterface;
 use League\OAuth2\Server\Repositories\RefreshTokenRepositoryInterface;
+use function Hyperf\Config\config;
 
 class RefreshTokenRepository implements RefreshTokenRepositoryInterface
 {

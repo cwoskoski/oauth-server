@@ -18,6 +18,7 @@ use OAuthServer\Repositories\FormatsScopesForStorage;
 use League\OAuth2\Server\Entities\ClientEntityInterface;
 use League\OAuth2\Server\Entities\AccessTokenEntityInterface;
 use League\OAuth2\Server\Repositories\AccessTokenRepositoryInterface;
+use function Hyperf\Config\config;
 
 class AccessTokenRepository implements AccessTokenRepositoryInterface
 {
