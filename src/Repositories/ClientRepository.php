@@ -23,7 +23,7 @@ class ClientRepository implements ClientRepositoryInterface
         $record = $this->findActive($clientIdentifier);
 
         if (! $record) {
-            return;
+            return null;
         }
 
         return new ClientEntity(
@@ -48,8 +48,6 @@ class ClientRepository implements ClientRepositoryInterface
         }
 
         return empty($record->secret) || $this->verifySecret((string) $clientSecret, $record->secret);
-
-        return true;
     }
 
     protected function handlesGrant($record, $grantType)
