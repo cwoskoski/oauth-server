@@ -64,16 +64,14 @@ class ClientRepository implements ClientRepositoryInterface
 
     protected function verifySecret($clientSecret, $storedHash): bool
     {
-        return (false)
-                ? password_verify($clientSecret, $storedHash)
-                : hash_equals($storedHash, $clientSecret);
+        return password_verify($clientSecret, $storedHash);
     }
 
     public function findActive($clientIdentifier)
     {
         return Db::connection(config('oauth.provider', 'default'))->table('oauth_clients')
             ->where('revoked', 0)
-            ->where('id', $clientIdentifier)
+            ->where('name', $clientIdentifier)
             ->first();
     }
 }

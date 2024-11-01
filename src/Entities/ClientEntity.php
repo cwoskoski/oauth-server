@@ -30,7 +30,7 @@ class ClientEntity implements ClientEntityInterface
      *
      * @var string
      */
-    public string $provider;
+    public ?string $provider;
 
     /**
      * Undocumented variable

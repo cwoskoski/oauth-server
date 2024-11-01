@@ -9,6 +9,7 @@
 
 namespace OAuthServer\Entities;
 
+use League\OAuth2\Server\Entities\ScopeEntityInterface;
 use League\OAuth2\Server\Entities\Traits\EntityTrait;
 use League\OAuth2\Server\Entities\ClientEntityInterface;
 use League\OAuth2\Server\Entities\Traits\AccessTokenTrait;
@@ -24,12 +25,11 @@ class AccessTokenEntity implements AccessTokenEntityInterface
     /**
      * Create a new token instance.
      *
-     * @param  string  $userIdentifier
-     * @param  array  $scopes
-     * @param  \League\OAuth2\Server\Entities\ClientEntityInterface  $client
-     * @return void
+     * @param string|null $userIdentifier
+     * @param ScopeEntityInterface[] $scopes
+     * @param ClientEntityInterface $client
      */
-    public function __construct(string $userIdentifier, array $scopes, ClientEntityInterface $client)
+    public function __construct(?string $userIdentifier, array $scopes, ClientEntityInterface $client)
     {
         $this->setUserIdentifier($userIdentifier);
 

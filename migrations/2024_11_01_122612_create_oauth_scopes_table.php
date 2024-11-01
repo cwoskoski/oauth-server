@@ -5,7 +5,7 @@ use Hyperf\Database\Schema\Blueprint;
 use Hyperf\Database\Migrations\Migration;
 use function Hyperf\Config\config;
 
-class CreateOauthRefreshTokensTable extends Migration
+class CreateOauthScopesTable extends Migration
 {
     protected $schema;
 
@@ -26,11 +26,8 @@ class CreateOauthRefreshTokensTable extends Migration
      */
     public function up(): void
     {
-        $this->schema->create('oauth_refresh_tokens', function (Blueprint $table) {
-            $table->string('id', 100)->primary();
-            $table->string('access_token_id', 100)->index();
-            $table->boolean('revoked');
-            $table->dateTime('expires_at')->nullable();
+        $this->schema->create('oauth_scopes', function (Blueprint $table) {
+            $table->string('id', 30)->primary();
         });
     }
 
@@ -41,13 +38,13 @@ class CreateOauthRefreshTokensTable extends Migration
      */
     public function down(): void
     {
-        $this->schema->dropIfExists('oauth_refresh_tokens');
+        $this->schema->dropIfExists('oauth_scopes');
     }
 
     /**
      * Get the migration connection name.
      *
-     * @return string
+     * @return string|null
      */
     public function getConnection(): string
     {

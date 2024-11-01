@@ -3,6 +3,7 @@
 use Hyperf\Database\Schema\Schema;
 use Hyperf\Database\Schema\Blueprint;
 use Hyperf\Database\Migrations\Migration;
+use function Hyperf\Config\config;
 
 class CreateOauthAccessTokensTable extends Migration
 {
