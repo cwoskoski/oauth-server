@@ -26,10 +26,10 @@ class ScopeRepository implements ScopeRepositoryInterface
     /**
      * {@inheritdoc}
      */
-    public function getScopeEntityByIdentifier($scopeIdentifier)
+    public function getScopeEntityByIdentifier($scopeIdentifier): ?\League\OAuth2\Server\Entities\ScopeEntityInterface
     {
         if (! $this->hasScope($scopeIdentifier)) {
-            return;
+            return null;
         }
 
         $scope = new ScopeEntity();
@@ -40,13 +40,15 @@ class ScopeRepository implements ScopeRepositoryInterface
 
     /**
      * {@inheritdoc}
+     * @param array $scopes
+     * @param string $grantType
+     * @param ClientEntityInterface $clientEntity
+     * @param null $userIdentifier
+     * @param string|null $authCodeId
      */
     public function finalizeScopes(
-        array $scopes,
-        $grantType,
-        ClientEntityInterface $clientEntity,
-        $userIdentifier = null
-    ) {
+        array $scopes, $grantType, ClientEntityInterface $clientEntity, $userIdentifier = null, ?string $authCodeId = null): array
+    {
         if (! in_array($grantType, ['password', 'personal_access', 'client_credentials'])) {
             $scopes = collect($scopes)->reject(function ($scope) {
                 return trim($scope->getIdentifier()) === '*';
@@ -58,7 +60,7 @@ class ScopeRepository implements ScopeRepositoryInterface
         })->values()->all();
     }
 
-    protected function hasScope($scopeIdentifier)
+    protected function hasScope($scopeIdentifier): bool
     {
         $scopes = $this->config->get('oauth.scopes', []);
         if (\array_key_exists($scopeIdentifier, $scopes) === false) {

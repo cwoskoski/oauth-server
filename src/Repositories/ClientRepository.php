@@ -18,7 +18,7 @@ class ClientRepository implements ClientRepositoryInterface
     /**
      * {@inheritdoc}
      */
-    public function getClientEntity($clientIdentifier)
+    public function getClientEntity($clientIdentifier): ?\League\OAuth2\Server\Entities\ClientEntityInterface
     {
         $record = $this->findActive($clientIdentifier);
 
@@ -39,7 +39,7 @@ class ClientRepository implements ClientRepositoryInterface
     /**
      * {@inheritdoc}
      */
-    public function validateClient($clientIdentifier, $clientSecret, $grantType)
+    public function validateClient($clientIdentifier, $clientSecret, $grantType): bool
     {
         $record = $this->findActive($clientIdentifier);
 
@@ -54,21 +54,16 @@ class ClientRepository implements ClientRepositoryInterface
 
     protected function handlesGrant($record, $grantType)
     {
-        switch ($grantType) {
-            case 'authorization_code':
-                return ! ($record->personal_access_client || $record->password_client);
-            case 'personal_access':
-                return $record->personal_access_client && ! empty($record->secret);
-            case 'password':
-                return $record->password_client;
-            case 'client_credentials':
-                return ! empty($record->secret) && ! $record->password_client;
-            default:
-                return true;
-        }
+        return match ($grantType) {
+            'authorization_code' => !($record->personal_access_client || $record->password_client),
+            'personal_access' => $record->personal_access_client && !empty($record->secret),
+            'password' => $record->password_client,
+            'client_credentials' => !empty($record->secret) && !$record->password_client,
+            default => true,
+        };
     }
 
-    protected function verifySecret($clientSecret, $storedHash)
+    protected function verifySecret($clientSecret, $storedHash): bool
     {
         return (false)
                 ? password_verify($clientSecret, $storedHash)

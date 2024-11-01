@@ -28,7 +28,7 @@ class RefreshTokenRepository implements RefreshTokenRepositoryInterface
     /**
      * {@inheritdoc}
      */
-    public function persistNewRefreshToken(RefreshTokenEntityInterface $refreshTokenEntity)
+    public function persistNewRefreshToken(RefreshTokenEntityInterface $refreshTokenEntity): void
     {
         Db::connection(config('oauth.provider', 'default'))->table('oauth_refresh_tokens')->insert([
             'id' => $id = $refreshTokenEntity->getIdentifier(),
@@ -43,7 +43,7 @@ class RefreshTokenRepository implements RefreshTokenRepositoryInterface
     /**
      * {@inheritdoc}
      */
-    public function revokeRefreshToken($tokenId)
+    public function revokeRefreshToken($tokenId): void
     {
         Db::connection(config('oauth.provider', 'default'))->table('oauth_refresh_tokens')->where('id', $tokenId)->update(['revoked' => 1]);
     }
@@ -51,7 +51,7 @@ class RefreshTokenRepository implements RefreshTokenRepositoryInterface
     /**
      * {@inheritdoc}
      */
-    public function isRefreshTokenRevoked($tokenId)
+    public function isRefreshTokenRevoked($tokenId): bool
     {
         if ($token = Db::connection(config('oauth.provider', 'default'))->table('oauth_refresh_tokens')->where('id', $tokenId)->first()) {
             return (bool) $token->revoked;
@@ -63,7 +63,7 @@ class RefreshTokenRepository implements RefreshTokenRepositoryInterface
     /**
      * {@inheritdoc}
      */
-    public function getNewRefreshToken()
+    public function getNewRefreshToken(): ?RefreshTokenEntityInterface
     {
         return new RefreshTokenEntity();
     }

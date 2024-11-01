@@ -26,7 +26,8 @@ class UserRepository implements UserRepositoryInterface
         $password,
         $grantType,
         ClientEntityInterface $clientEntity
-    ) {
+    ): ?\League\OAuth2\Server\Entities\UserEntityInterface
+    {
         $provider = $clientEntity->provider ?: config('oauth.provider');
 
         if (is_null($config = config('databases.'.$provider, null))) {
@@ -38,11 +39,11 @@ class UserRepository implements UserRepositoryInterface
         $user = $query->table(config('oauth.user_table', 'users'))->where(config('oauth.find_by', 'email'), $username)->first();
 
         if (! $user) {
-            return;
+            return null;
         }
 
         if (!password_verify($password, $user->password)) {
-            return;
+            return null;
         }
 
         return new UserEntity($user->id);
@@ -80,7 +81,7 @@ class UserRepository implements UserRepositoryInterface
         return new UserEntity($user->id);
     }
 
-    public function getUserByProviderUserId($id, $client)
+    public function getUserByProviderUserId($id, $client): UserEntity
     {
         $provider = $client->provider;
 

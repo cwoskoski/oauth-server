@@ -33,7 +33,7 @@ class AccessTokenRepository implements AccessTokenRepositoryInterface
     /**
      * {@inheritdoc}
      */
-    public function persistNewAccessToken(AccessTokenEntityInterface $accessTokenEntity)
+    public function persistNewAccessToken(AccessTokenEntityInterface $accessTokenEntity): void
     {
         Db::connection(config('oauth.provider', 'default'))->table('oauth_access_tokens')->insert([
             'id' => $accessTokenEntity->getIdentifier(),
@@ -56,7 +56,7 @@ class AccessTokenRepository implements AccessTokenRepositoryInterface
     /**
      * {@inheritdoc}
      */
-    public function revokeAccessToken($tokenId)
+    public function revokeAccessToken($tokenId): void
     {
         Db::connection(config('oauth.provider', 'default'))->table('oauth_access_tokens')->where('id', $tokenId)->update(['revoked' => 1]);
     }
@@ -64,7 +64,7 @@ class AccessTokenRepository implements AccessTokenRepositoryInterface
     /**
      * {@inheritdoc}
      */
-    public function isAccessTokenRevoked($tokenId)
+    public function isAccessTokenRevoked($tokenId): bool
     {
         if ($token = Db::connection(config('oauth.provider', 'default'))->table('oauth_access_tokens')->find($tokenId)) {
             return (bool) $token->revoked;
@@ -75,7 +75,7 @@ class AccessTokenRepository implements AccessTokenRepositoryInterface
     /**
      * {@inheritdoc}
      */
-    public function getNewToken(ClientEntityInterface $clientEntity, array $scopes, $userIdentifier = null)
+    public function getNewToken(ClientEntityInterface $clientEntity, array $scopes, $userIdentifier = null): AccessTokenEntityInterface
     {
         return new AccessTokenEntity(
             $userIdentifier,

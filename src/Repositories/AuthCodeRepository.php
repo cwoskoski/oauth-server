@@ -18,7 +18,7 @@ class AuthCodeRepository implements AuthCodeRepositoryInterface
     /**
      * {@inheritdoc}
      */
-    public function persistNewAuthCode(AuthCodeEntityInterface $authCodeEntity)
+    public function persistNewAuthCode(AuthCodeEntityInterface $authCodeEntity): void
     {
         $attributes = [
             'id' => $authCodeEntity->getIdentifier(),
@@ -35,7 +35,7 @@ class AuthCodeRepository implements AuthCodeRepositoryInterface
     /**
      * {@inheritdoc}
      */
-    public function revokeAuthCode($codeId)
+    public function revokeAuthCode($codeId): void
     {
         Db::connection(config('oauth.provider', 'default'))->table('oauth_auth_codes')->where('id', $codeId)->update(['revoked' => 1]);
     }
@@ -43,7 +43,7 @@ class AuthCodeRepository implements AuthCodeRepositoryInterface
     /**
      * {@inheritdoc}
      */
-    public function isAuthCodeRevoked($codeId)
+    public function isAuthCodeRevoked($codeId): bool
     {
         return Db::connection(config('oauth.provider', 'default'))->table('oauth_auth_codes')->where('id', $codeId)->where('revoked', 1)->exists();
     }
@@ -51,7 +51,7 @@ class AuthCodeRepository implements AuthCodeRepositoryInterface
     /**
      * {@inheritdoc}
      */
-    public function getNewAuthCode()
+    public function getNewAuthCode(): AuthCodeEntityInterface
     {
         return new AuthCodeEntity();
     }
