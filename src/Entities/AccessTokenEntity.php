@@ -31,7 +31,7 @@ class AccessTokenEntity implements AccessTokenEntityInterface
      */
     public function __construct(?string $userIdentifier, array $scopes, ClientEntityInterface $client)
     {
-        $this->setUserIdentifier($userIdentifier);
+        $this->userIdentifier = $userIdentifier;
 
         foreach ($scopes as $scope) {
             $this->addScope($scope);
