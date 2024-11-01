@@ -2,7 +2,6 @@
 
 return [
     // config here
-    'route' => '/oauth/token',
     'key' => '<<<NEED TO GENERATE THE KEY>>>',
     // return DateInterval https://www.php.net/manual/en/class.dateinterval.php
     'expire_in' => [

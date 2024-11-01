@@ -10,7 +10,6 @@ use Hyperf\HttpServer\Contract\RequestInterface;
 use Hyperf\HttpServer\Contract\ResponseInterface;
 use OAuthServer\Exception\AuthenticationException;
 use League\OAuth2\Server\Exception\OAuthServerException;
-use function Hyperf\Config\config;
 
 class RouteRegistry
 {
@@ -35,7 +34,7 @@ class RouteRegistry
         $this->router = $app->router;
 
         $this->router->post(
-            config('oauth.route', '/oauth/token'),
+            '/oauth/token',
             function (RequestInterface $request, ResponseInterface $response) {
                 return $this->issueToken($request, $response);
             }
