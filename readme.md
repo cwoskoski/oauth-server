@@ -5,14 +5,14 @@
 ### installation
 
 ```
-    composer require xtwoend/oauth-server
+    composer require cwoskoski/oauth-server
 ```
 
 
 ### Run on terminal
 
 ```
-    php bin/hyperf.php vendor:publish xtwoend/oauth-server
+    php bin/hyperf.php vendor:publish cwoskoski/oauth-server
     
     php bin/hyperf.php migrate
 
