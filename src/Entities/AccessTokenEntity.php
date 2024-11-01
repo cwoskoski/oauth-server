@@ -25,11 +25,11 @@ class AccessTokenEntity implements AccessTokenEntityInterface
     /**
      * Create a new token instance.
      *
-     * @param string|null $userIdentifier
+     * @param string $userIdentifier
      * @param ScopeEntityInterface[] $scopes
      * @param ClientEntityInterface $client
      */
-    public function __construct(?string $userIdentifier, array $scopes, ClientEntityInterface $client)
+    public function __construct(string $userIdentifier, array $scopes, ClientEntityInterface $client)
     {
         $this->setUserIdentifier($userIdentifier);
 
