@@ -89,6 +89,12 @@ class ConfigProvider
                     'source' => __DIR__ . '/../migrations/2020_12_21_152612_create_oauth_personal_access_clients_table.php',
                     'destination' => BASE_PATH . '/migrations/2020_12_21_152612_create_oauth_personal_access_clients_table.php',
                 ],
+                [
+                    'id' => 'migration',
+                    'description' => 'The migration for oauth.',
+                    'source' => __DIR__ . '/../migrations/2024_11_01_122612_create_oauth_scopes_table.php',
+                    'destination' => BASE_PATH . '/migrations/2024_11_01_122612_create_oauth_scopes_table.php',
+                ],
             ],
         ];
     }

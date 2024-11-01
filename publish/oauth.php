@@ -2,7 +2,7 @@
 
 return [
     // config here
-    'key' => 'CpmLVtjV8diGbhEsVD3IWoVOn31pRpmupEcxMCgtXp9LGpe39F',
+    'key' => '<<<NEED TO GENERATE THE KEY>>>',
     // return DateInterval https://www.php.net/manual/en/class.dateinterval.php
     'expire_in' => [
         'token' =>  'P1D', 
