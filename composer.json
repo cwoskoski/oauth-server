@@ -2,7 +2,6 @@
     "name": "cwoskoski/oauth-server",
     "description": "OAuth2 Server for Hyperf Framework",
     "license": "MIT",
-    "version": "1.4.0",
     "authors": [
         {
             "name": "Chad Woskoski",
@@ -11,8 +10,8 @@
     ],
     "minimum-stability": "dev",
     "require": {
-        "hyperf/database": "~3.1.0",
-        "hyperf/db-connection": "~3.1.0",
+        "hyperf/database": "~3.1.0 || ~3.2.0",
+        "hyperf/db-connection": "~3.1.0 || ~3.2.0",
         "league/oauth2-server": "^9.0",
         "nesbot/carbon": "^2.0",
         "phpseclib/phpseclib": "^3.0"
